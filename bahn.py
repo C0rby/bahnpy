@@ -23,11 +23,11 @@ import sys
 from docopt import docopt
 from bs4 import BeautifulSoup
 
-default_start = 'Ostring, Nürnberg'
-default_destination = 'Fürth(Bay)Hbf'
-default_time = '17:42'
+default_start = ''
+default_destination = ''
+default_time = ''
 
-http_proxy = 'http://nvg_proxy:8080'
+http_proxy = ''
 https_proxy = http_proxy
 proxies = {'http': http_proxy, 'https': https_proxy}
 
