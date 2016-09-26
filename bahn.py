@@ -1,11 +1,12 @@
 #!/usr/bin/env python
+#coding: utf-8
 """Usage:   bahn.py [<TIME>]
             bahn.py <START> <DESTINATION> [<TIME>]
 
 Shows the departure, arrival and delay of trains.
 The default TIME is the 17:42
-The default START is "Ostring, Nürnberg"
-The default DESTINATION is "Fürth(Bay)Hbf"
+The default START is "Ostring, Nuernberg"
+The default DESTINATION is "Fuerth(Bay)Hbf"
 
 Arguments:
   TIME        optional departure time
@@ -22,10 +23,11 @@ import re
 import sys
 from docopt import docopt
 from bs4 import BeautifulSoup
+from data import TrainInfoQueryBuilder
 
-default_start = ''
-default_destination = ''
-default_time = ''
+default_start = 'Nürnberg Ostring'
+default_destination = 'Fürth(Bay)Hbf'
+default_time = '17:42'
 
 http_proxy = ''
 https_proxy = http_proxy
@@ -33,39 +35,8 @@ proxies = {'http': http_proxy, 'https': https_proxy}
 
 
 def fetch_data(start=default_start, destination=default_destination, time=default_time):
-    class QueryBuilder(object):
-        __base_url = 'https://reiseauskunft.bahn.de/bin/query.exe/dn?'
-        __start_param = '&start=1'
-        __rbahn_param = '&REQ0JourneyProduct_prod_section_0_3=1'
-        __sbahn_param = '&REQ0JourneyProduct_prod_section_0_4=1'
-        __ubahn_param = '&REQ0JourneyProduct_prod_section_0_7=1'
-        __tram_param = '&REQ0JourneyProduct_prod_section_0_8=1'
-        __params = {'start': '1',
-                    'REQ0JourneyProduct_prod_section_0_3': '1',
-                    'REQ0JourneyProduct_prod_section_0_4': '1',
-                    'REQ0JourneyProduct_prod_section_0_7': '1',
-                    'REQ0JourneyProduct_prod_section_0_8': '1'
-                    }
-
-        def __init__(self):
-            pass
-
-        def query(self, start, destination):
-            start_key = 'S'
-            destination_key = 'Z'
-            self.__params[start_key] = start
-            self.__params[destination_key] = destination
-            return self
-
-        def start_time(self, time):
-            time_key = 'time'
-            self.__params[time_key] = time
-            return self
-
-        def build(self):
-            return self.__base_url + urllib.parse.urlencode(self.__params)
-
-    url = QueryBuilder().query(start, destination).start_time(time).build()
+    url = TrainInfoQueryBuilder().with_route(start, destination).with_departure_time_at(time).include_tram().include_metro().include_interurban_train().include_regional_train().build()
+    print(url)
     return requests.get(url, proxies=proxies, verify=False)
 
 
@@ -108,7 +79,7 @@ def parse_args(args):
         sys.exit(0)
 
 if __name__ == "__main__":
-    requests.packages.urllib3.disable_warnings()  # disable ssl warning
+    #requests.packages.urllib3.disable_warnings()  # disable ssl warning
 
     args = docopt(__doc__, version='bahn.py 0.1')
     parse_args(args)
