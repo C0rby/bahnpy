@@ -18,7 +18,6 @@ Options:
 """
 
 import requests
-import urllib.parse  # urllib for python2 or urllip.parse for python3
 import re
 import sys
 from docopt import docopt
@@ -36,7 +35,6 @@ proxies = {'http': http_proxy, 'https': https_proxy}
 
 def fetch_data(start=default_start, destination=default_destination, time=default_time):
     url = TrainInfoQueryBuilder().with_route(start, destination).with_departure_time_at(time).include_tram().include_metro().include_interurban_train().include_regional_train().build()
-    print(url)
     return requests.get(url, proxies=proxies, verify=False)
 
 

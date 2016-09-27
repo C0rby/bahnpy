@@ -1,5 +1,9 @@
 # coding: utf-8
 
+
+import urllib.parse
+
+
 class TrainInfoQueryBuilder(object):
     __base_url = 'https://reiseauskunft.bahn.de/bin/query.exe/dn?'
 
