@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#coding: utf-8
+# coding: utf-8
 """Usage:   bahn.py [<TIME>]
             bahn.py <START> <DESTINATION> [<TIME>]
 
@@ -17,10 +17,10 @@ Options:
   --version
 """
 
-import requests
 import re
 import sys
 from docopt import docopt
+import requests
 from bs4 import BeautifulSoup
 from data import TrainInfoQueryBuilder
 
@@ -34,7 +34,8 @@ proxies = {'http': http_proxy, 'https': https_proxy}
 
 
 def fetch_data(start=default_start, destination=default_destination, time=default_time):
-    url = TrainInfoQueryBuilder().with_route(start, destination).with_departure_time_at(time).include_tram().include_metro().include_interurban_train().include_regional_train().build()
+    url = TrainInfoQueryBuilder().with_route(start, destination).with_departure_time_at(
+        time).include_tram().include_metro().include_interurban_train().include_regional_train().build()
     return requests.get(url, proxies=proxies, verify=False)
 
 
@@ -54,10 +55,12 @@ def create_times_and_transport(main_content):
         times.append((start, end, transport))
     return times
 
+
 def get_transport(row):
     row_soup = soup(str(row))
     products = row_soup('td', 'products')
     return 'N/A' if not products else products[0].get_text().replace('\n', '')
+
 
 def get_time(row):
     row_soup = soup(str(row))
@@ -66,7 +69,8 @@ def get_time(row):
 
 def print_information(start, destination, times):
     for start_time, end, transport in times:
-        print('Start:', start, start_time.strip(),'|', 'Ziel:', destination, end.strip(), transport)
+        print('Start:', start, start_time.strip(), '|',
+              'Ziel:', destination, end.strip(), transport)
 
 
 def parse_args(args):
@@ -77,7 +81,7 @@ def parse_args(args):
         sys.exit(0)
 
 if __name__ == "__main__":
-    #requests.packages.urllib3.disable_warnings()  # disable ssl warning
+    # requests.packages.urllib3.disable_warnings()  # disable ssl warning
 
     args = docopt(__doc__, version='bahn.py 0.1')
     parse_args(args)

@@ -2,6 +2,8 @@
 
 
 import urllib.parse
+import requests
+from bs4 import BeautifulSoup
 
 
 class TrainInfoQueryBuilder(object):
@@ -40,3 +42,16 @@ class TrainInfoQueryBuilder(object):
 
     def build(self):
         return self.__base_url + urllib.parse.urlencode(self.params)
+
+
+class DataFetcher(object):
+
+    def __init__(self, proxies=None, ignore_ssl=False):
+        self.proxies = proxies
+        self.ignore_ssl = ignore_ssl
+
+        if(ignore_ssl):
+            requests.packages.urllib3.disable_warnings()  # disable ssl warning
+
+    def fetch_data(url):
+        return requests.get(url, proxies=self.proxies, verify= !self.ignore_ssl)
