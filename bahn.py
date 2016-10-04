@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 """Usage:   bahn.py [<TIME>]
-            bahn.py <START> <DESTINATION> [<TIME>]
+            bahn.py <ORIGIN> <DESTINATION> [<TIME>]
 
 Shows the departure, arrival and delay of trains.
 The default TIME is the 17:42
-The default START is "Ostring, Nuernberg"
+The default ORIGIN is "Ostring, Nuernberg"
 The default DESTINATION is "Fuerth(Bay)Hbf"
 
 Arguments:
@@ -23,6 +23,7 @@ from docopt import docopt
 import requests
 from bs4 import BeautifulSoup
 from data import TrainInfoQueryBuilder
+from config import Config
 
 default_start = 'Nürnberg Ostring'
 default_destination = 'Fürth(Bay)Hbf'
@@ -81,16 +82,36 @@ def parse_args(args):
         sys.exit(0)
 
 if __name__ == "__main__":
-    # requests.packages.urllib3.disable_warnings()  # disable ssl warning
+    config = Config.load("config/config.json")
+    default_route = config.default_route
 
     args = docopt(__doc__, version='bahn.py 0.1')
     parse_args(args)
 
-    start = args['<START>'] if args['<START>'] else default_start
-    destination = args['<DESTINATION>'] if args[
-        '<DESTINATION>'] else default_destination
-    time = args['<TIME>'] if args['<TIME>'] else default_time
+    if args['<ORIGIN>']:
+        start = args['<ORIGIN>']
+    elif default_route and default_route.origin:
+        start = default_route.origin
+    else:
+        print('Provide an origin or set a default route')
+        sys.exit(0)
 
+    if args['<DESTINATION>']:
+        destination = args['<DESTINATION>']
+    elif default_route and default_route.destination:
+        destination = default_route.destination
+    else:
+        print('Provide a destination or set a default route')
+        sys.exit(0)
+
+    if args['<TIME>']:
+        time = args['<TIME>']
+    elif default_route and default_route.departure_time:
+        time = default_route.departure_time
+    else:
+        print('Provide a departure time or set a default route')
+        sys.exit(0)
+        
     response = fetch_data(start, destination, time)
     main_content = soup(response.text)
 

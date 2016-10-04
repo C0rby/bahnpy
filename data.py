@@ -54,4 +54,4 @@ class DataFetcher(object):
             requests.packages.urllib3.disable_warnings()  # disable ssl warning
 
     def fetch_data(url):
-        return requests.get(url, proxies=self.proxies, verify= !self.ignore_ssl)
+        return requests.get(url, proxies=self.proxies, verify=not self.ignore_ssl)
