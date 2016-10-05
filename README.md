@@ -106,7 +106,7 @@ Origin: Berlin Hbf 13:32 | Destination: Berlin-Tegel (S) 13:57 RE, S
 Origin: Berlin Hbf 13:36 | Destination: Berlin-Tegel (S) 14:14 STR, U
 Origin: Berlin Hbf 13:46 | Destination: Berlin-Tegel (S) 14:17 RE, S
 
-[corby@Rabensalat:~/Tools/bahnpy]$ ./bahn.py 15:30
+[corby@host:~/Tools/bahnpy]$ ./bahn.py 15:30
 Origin: Berlin Hbf 15:21 | Destination: Berlin-Tegel (S) 15:56 STR, U
 Origin: Berlin Hbf 15:26 | Destination: Berlin-Tegel (S) 15:57 S
 Origin: Berlin Hbf 15:28 | Destination: Berlin-Tegel (S) 16:05 S, U
