@@ -32,8 +32,8 @@ class Config:
         return cls(path, config)
 
     @property
-    def proxy(self):
-        return self.__config.get('proxy', {})
+    def network(self):
+        return self.__config.get('network', {})
 
     @property
     def default_route(self):

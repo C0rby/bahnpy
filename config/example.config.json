@@ -5,20 +5,22 @@
         "departure_time": "TIME"
     },
     "presets": {
-        "fromHomeToWork": {
+        "preset1": {
             "origin": "Origin",
             "destination": "Destination",
             "departure_time": "TIME"
         },
-        "fromWorkToHome": {
+        "preset2": {
             "origin": "Origin",
             "destination": "Destination",
             "departure_time": "TIME"
         }
     },
-    "proxy": {
-        "http_proxy": "http://foo:8080",
-        "https_proxy": "http://foo:8080",
+    "network": {
+        "proxy": {
+            "http_proxy": "http://foo:8080",
+            "https_proxy": "http://foo:8080",
+        },
         "ignore_ssl": true
     }
 }
