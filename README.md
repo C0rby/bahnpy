@@ -50,7 +50,7 @@ The example configuration file looks like this:
     "network": {
         "proxy": {
             "http": "http://foo:8080",
-            "https": "http://foo:8080",
+            "https": "http://foo:8080"
         },
         "ignore_ssl": true
     }
