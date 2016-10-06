@@ -28,7 +28,7 @@ Just create a file named `config.json` in the config folder and fill in the need
 You can also define presets which are route that are not default but are also often used.
 
 The example configuration file looks like this:
-```
+```JSON
 {
     "default_route": {
         "origin": "Origin",
@@ -49,8 +49,8 @@ The example configuration file looks like this:
     },
     "network": {
         "proxy": {
-            "http_proxy": "http://foo:8080",
-            "https_proxy": "http://foo:8080",
+            "http": "http://foo:8080",
+            "https": "http://foo:8080",
         },
         "ignore_ssl": true
     }

@@ -70,7 +70,7 @@ if __name__ == "__main__":
         departure_time).include_tram().include_metro().include_regional_train().include_interurban_train().build()
 
     ignore_ssl = config.network.get('ignore_ssl', False)
-    proxies = config.network.get('proxies', {})
+    proxies = config.network.get('proxy', {})
 
     timetable = data.get_timetable(url, proxies, ignore_ssl)
     _print_timetable(origin, destination, timetable)

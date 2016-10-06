@@ -18,8 +18,8 @@
     },
     "network": {
         "proxy": {
-            "http_proxy": "http://foo:8080",
-            "https_proxy": "http://foo:8080",
+            "http": "http://foo:8080",
+            "https": "http://foo:8080"
         },
         "ignore_ssl": true
     }
