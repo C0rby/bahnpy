@@ -15,6 +15,7 @@ Options:
   --version
 """
 
+import os
 import re
 import sys
 from docopt import docopt
@@ -41,7 +42,8 @@ def _parse_args(args):
         sys.exit(1)
 
 if __name__ == "__main__":
-    config = Config.load("config/config.json")
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    config = Config.load(dir_path + "/config/config.json")
 
     args = docopt(__doc__, version='bahn.py 0.1')
     _parse_args(args)
